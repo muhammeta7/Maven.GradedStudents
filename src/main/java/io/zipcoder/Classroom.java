@@ -1,7 +1,12 @@
 package io.zipcoder;
 
 public class Classroom {
-    Student[] students;
+
+    private Student[] students;
 
 
+
+    public Classroom(Student[] students) {
+        this.students = students;
+    }
 }

@@ -34,7 +34,7 @@ public class StudentTest {
         Double[] examScores2 = {};
         Student student1 = new Student("Moe", "Aydin", examScores1);
         Student student2 = new Student("Moe", "Aydin", examScores2);
-        String expected1 = "Exam Scores: \n  Exam 1 -> 95.0\n  Exam 2 -> 80.0";
+        String expected1 = "Exam Scores: \n  Exam 1 -> 95.00\n  Exam 2 -> 80.00";
         String expected2 = "Exam Scores: \n";
 
         // When
@@ -130,7 +130,7 @@ public class StudentTest {
         // Given
         Double[] examScores = {90.0, 80.0};
         Student student = new Student("Moe", "Aydin", examScores);
-        String expected = "Student Name: Moe Aydin\n> Average Score: 85.0\n> Exam Scores: \n  Exam 1 -> 90.0\n  Exam 2 -> 80.0";
+        String expected = "Student Name: Moe Aydin\n> Average Score: 85.00\n> Exam Scores: \n  Exam 1 -> 90.00\n  Exam 2 -> 80.00";
 
         // When
         String actual = student.toString();

@@ -62,7 +62,7 @@ public class Student {
         int count = 1;
 
         for (int d = 0; d < examScores.size(); d++ ) {
-            String examScore = String.format("%.1f", examScores.get(d));
+            String examScore = String.format("%.2f", examScores.get(d));
             if(d >= examScores.size()-1) {
                 scores += "  Exam " + count + " -> "+ examScore;
             } else {
@@ -88,7 +88,7 @@ public class Student {
     @Override
     public String toString(){
         String output = "Student Name: "+ this.firstName + " " + this.lastName+"\n";
-        output += "> Average Score: "+ this.getAverageExamScore() + "\n";
+        output += "> Average Score: "+ String.format("%.2f" ,this.getAverageExamScore()) + "\n";
         output += "> "+ this.getExamScores();
         return output;
     }
