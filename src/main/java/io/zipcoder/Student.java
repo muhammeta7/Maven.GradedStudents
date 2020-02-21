@@ -76,8 +76,8 @@ public class Student {
     public Double getAverageExamScore(){
         double sum = 0;
 
-        for(double element : examScores){
-            sum += element;
+        for(double d : examScores){
+            sum += d;
         }
 
         return sum / examScores.size();
