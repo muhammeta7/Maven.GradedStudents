@@ -43,8 +43,8 @@ public class Student {
         examScores.add(examScore);
     }
 
-    public void setExamScore(int examNumber, Double newScore){
-        examScores.set(examNumber-1, newScore);
+    public void setExamScore(int examToSet, Double newScore){
+        examScores.set(examToSet-1, newScore);
     }
 
     public Double[] getExamScoresArray(){
