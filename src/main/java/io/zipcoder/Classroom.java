@@ -69,6 +69,16 @@ public class Classroom {
 
     }
 
+    public Double getHighestScore(){
+        double result = 0;
+        for (int i = 1; i < students.length ; i++) {
+            if(students[i-1].getAverageExamScore() > students[i].getAverageExamScore()){
+                result = students[i-1].getAverageExamScore();
+            }
+        }
+        return result;
+    }
+
     public Student[] getStudentsByScore(){
 
         Comparator<Student> compareStudent = Comparator.comparing(Student::getAverageExamScore).reversed().thenComparing(Student::getLastName);
@@ -78,32 +88,45 @@ public class Classroom {
 
     }
 
-    public Map<Student, String> getGradebook(){
+    public TreeMap<String, ArrayList<Student>> getGradebook(){
 
-        Map<Student, String> gradebook = new HashMap<>();
-        Student[] sortedGrades = getStudentsByScore();
-        Double percentile;
-        Double classSize = new Double(sortedGrades.length);
+        // Figure out percentile
+        Double a = getHighestScore() * 0.90;
+        Double b = getHighestScore() * 0.71;
+        Double c = getHighestScore() * 0.50;
+        Double d = getHighestScore() * 0.11;
 
-        for (int i = 0; i < sortedGrades.length; i++){
-            percentile = (((classSize - i) / classSize) * 100.0);
-            if (percentile >= 90){
-                gradebook.put(sortedGrades[i], "A");
-            }
-            else if(percentile >= 71){
-                gradebook.put(sortedGrades[i], "B");
-            }
-            else if(percentile >= 50){
-                gradebook.put(sortedGrades[i], "C");
-            }
-            else if(percentile >= 11){
-                gradebook.put(sortedGrades[i], "D");
-            }
-            else{
-                gradebook.put(sortedGrades[i], "F");
+        // Create arrayList for each type of student
+        ArrayList<Student> aStudents = new ArrayList<>();
+        ArrayList<Student> bStudents = new ArrayList<>();
+        ArrayList<Student> cStudents = new ArrayList<>();
+        ArrayList<Student> dStudents = new ArrayList<>();
+        ArrayList<Student> fStudents = new ArrayList<>();
+
+        for(Student s : students){
+            if( s.getAverageExamScore() < d){
+                fStudents.add(s);
+            } else if(s.getAverageExamScore() >= d && s.getAverageExamScore() < c){
+                dStudents.add(s);
+            } else if(s.getAverageExamScore() >= c && s.getAverageExamScore() < b){
+                cStudents.add(s);
+            } else if(s.getAverageExamScore() >= b && s.getAverageExamScore() < a){
+                bStudents.add(s);
+            } else{
+                aStudents.add(s);
             }
         }
+
+        // Insert studentsList into proper Grade
+        TreeMap<String, ArrayList<Student>> gradebook = new TreeMap<>();
+        gradebook.put("A", aStudents);
+        gradebook.put("B", bStudents);
+        gradebook.put("C", cStudents);
+        gradebook.put("D", dStudents);
+        gradebook.put("F", fStudents);
+
         return gradebook;
+
     }
 
 

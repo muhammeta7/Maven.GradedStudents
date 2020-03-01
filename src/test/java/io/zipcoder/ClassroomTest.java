@@ -3,8 +3,10 @@ package io.zipcoder;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class ClassroomTest {
 
@@ -36,10 +38,10 @@ public class ClassroomTest {
 
     @Test
     public void TestNullaryConstructor(){
-      //Given
-      Student[] expected = new Student[30];
+        //Given
+        Student[] expected = new Student[30];
 
-      // When
+        // When
         Classroom classroom = new Classroom();
         Student[] actual = classroom.getStudents();
 
@@ -135,34 +137,22 @@ public class ClassroomTest {
         Double[] d3 = {80.0};
         Double[] d4 = {70.0};
         Double[] d5 = {60.0};
-        Double[] d6 = {50.0};
-        Double[] d7 = {20.0};
+        Double[] d6 = {48.0};
+        Double[] d7 = {10.0};
         Student s1 = new Student("Moe", "A", d1);
-        Student s3 = new Student("Not", "Bad", d3);
-        Student s4 = new Student("Average", "Guy", d4);
-        Student s5 = new Student("Meh", "Eh", d5);
-        Student s6 = new Student("Fifty", "Fifty", d6);
-        Student s7 = new Student("No", "Show", d7);
-        Student[] students = {s7, s6, s5, s3, s4, s1};
+        Student s3 = new Student("B", "Student", d3);
+        Student s4 = new Student("C", "Guy", d4);
+        Student s5 = new Student("C", "Eh", d5);
+        Student s6 = new Student("D", "Fifty", d6);
+        Student s7 = new Student("F", "Show", d7);
+        Student[] students = {s3, s6, s4, s5, s1, s7};
         Classroom classroom = new Classroom(students);
-        Map<Student, String> expected = new HashMap<>();
-        expected.put(s1, "A");
-        expected.put(s3, "B");
-        expected.put(s4, "C");
-        expected.put(s5, "C");
-        expected.put(s6, "D");
-        expected.put(s7, "D");
 
         // When
-        Map<Student, String> actual = new HashMap<>();
-        actual = classroom.getGradebook();
+        TreeMap<String, ArrayList<Student>> actualGradeBook = classroom.getGradebook();
 
         // Then
-        Assert.assertEquals(expected.get(s1), actual.get(s1));
-        Assert.assertEquals(expected.get(s3), actual.get(s3));
-        Assert.assertEquals(expected.get(s4), actual.get(s4));
-        Assert.assertEquals(expected.get(s5), actual.get(s5));
-        Assert.assertEquals(expected.get(s6), actual.get(s6));
-        Assert.assertEquals(expected.get(s7), actual.get(s7));
+        System.out.println(actualGradeBook);
+
     }
 }
