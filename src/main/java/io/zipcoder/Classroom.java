@@ -1,6 +1,5 @@
 package io.zipcoder;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Classroom {
@@ -69,16 +68,6 @@ public class Classroom {
 
     }
 
-    public Double getHighestScore(){
-        double result = 0;
-        for (int i = 1; i < students.length ; i++) {
-            if(students[i-1].getAverageExamScore() > students[i].getAverageExamScore()){
-                result = students[i-1].getAverageExamScore();
-            }
-        }
-        return result;
-    }
-
     public Student[] getStudentsByScore(){
 
         Comparator<Student> compareStudent = Comparator.comparing(Student::getAverageExamScore).reversed().thenComparing(Student::getLastName);
@@ -88,42 +77,45 @@ public class Classroom {
 
     }
 
-    public TreeMap<String, ArrayList<Student>> getGradebook(){
-
-        // Figure out percentile
-        Double a = getHighestScore() * 0.90;
-        Double b = getHighestScore() * 0.71;
-        Double c = getHighestScore() * 0.50;
-        Double d = getHighestScore() * 0.11;
-
-        // Create arrayList for each type of student
-        ArrayList<Student> aStudents = new ArrayList<>();
-        ArrayList<Student> bStudents = new ArrayList<>();
-        ArrayList<Student> cStudents = new ArrayList<>();
-        ArrayList<Student> dStudents = new ArrayList<>();
-        ArrayList<Student> fStudents = new ArrayList<>();
-
-        for(Student s : students){
-            if( s.getAverageExamScore() < d){
-                fStudents.add(s);
-            } else if(s.getAverageExamScore() >= d && s.getAverageExamScore() < c){
-                dStudents.add(s);
-            } else if(s.getAverageExamScore() >= c && s.getAverageExamScore() < b){
-                cStudents.add(s);
-            } else if(s.getAverageExamScore() >= b && s.getAverageExamScore() < a){
-                bStudents.add(s);
-            } else{
-                aStudents.add(s);
-            }
+    public Character assignGrade(Double rank){
+        Character grade = ' ';
+        if(rank/students.length < 0.1){
+            grade = 'A';
+        } else if(rank/students.length < 0.29){
+            grade = 'B';
+        }else if(rank/students.length < 0.5){
+            grade = 'C';
+        }else if(rank/students.length < 0.89){
+            grade = 'D';
+        }else{
+            grade = 'F';
         }
 
-        // Insert studentsList into proper Grade
-        TreeMap<String, ArrayList<Student>> gradebook = new TreeMap<>();
-        gradebook.put("A", aStudents);
-        gradebook.put("B", bStudents);
-        gradebook.put("C", cStudents);
-        gradebook.put("D", dStudents);
-        gradebook.put("F", fStudents);
+        return grade;
+    }
+
+
+
+    public TreeMap<Student, Character> getGradebook(){
+
+        TreeMap<Student, Character> gradebook = new TreeMap<>();
+        Student[] array = getStudentsByScore();
+        Character grade = ' ';
+
+        int counter = 1;
+        double tempStudent = array[0].getAverageExamScore();
+        gradebook.put(array[0], assignGrade(0.0));
+
+        for (double i = 1; i < students.length; i++) {
+            if(tempStudent == array[(int) i].getAverageExamScore()){
+                grade = assignGrade(counter - 1.0);
+            } else {
+                grade = assignGrade(i);
+                tempStudent = array[(int) i].getAverageExamScore();
+                counter++;
+            }
+            gradebook.put(array[(int) i], grade);
+        }
 
         return gradebook;
 

@@ -132,27 +132,36 @@ public class ClassroomTest {
 
     @Test
     public void TestGetGradebook() {
-        // Given
-        Double[] d1 = {100.0};
-        Double[] d3 = {80.0};
-        Double[] d4 = {70.0};
-        Double[] d5 = {60.0};
-        Double[] d6 = {48.0};
-        Double[] d7 = {10.0};
-        Student s1 = new Student("Moe", "A", d1);
-        Student s3 = new Student("B", "Student", d3);
-        Student s4 = new Student("C", "Guy", d4);
-        Student s5 = new Student("C", "Eh", d5);
-        Student s6 = new Student("D", "Fifty", d6);
-        Student s7 = new Student("F", "Show", d7);
-        Student[] students = {s3, s6, s4, s5, s1, s7};
+        Double[] s1Scores = { 100.0, 100.0 };
+        Double[] s2Scores = { 85.0, 80.0 };
+        Double[] s3Scores = { 68.0, 71.0 };
+        Double[] s4Scores = { 49.0, 50.0 };
+        Double[] s5Scores = { 0.0, 15.0 };
+
+
+
+        Student s1 = new Student("Moe", "As", s1Scores);
+        Student s2 = new Student("Moe", "Bs", s2Scores);
+        Student s3 = new Student("Girl", "Cs", s3Scores);
+        Student s4 = new Student("Guy", "Ds", s4Scores);
+        Student s5 = new Student("Person", "Fs", s5Scores);
+
+
+        Student[] students = {s1,s2,s3,s4,s5};
         Classroom classroom = new Classroom(students);
 
         // When
-        TreeMap<String, ArrayList<Student>> actualGradeBook = classroom.getGradebook();
+        TreeMap<Student,Character> treeMap = classroom.getGradebook();
 
         // Then
-        System.out.println(actualGradeBook);
+        System.out.println("========================================");
+        for(Map.Entry<Student,Character> e : treeMap.entrySet()){
+            System.out.println(String.format("     %-13s%s", e.getKey().getFirstName()+" "+e.getKey().getLastName(), e.getValue()));
+        }
+        System.out.println("========================================");
 
     }
+
+
 }
+
